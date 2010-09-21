@@ -10,7 +10,7 @@ chdir "<%= @project_root %>"
 
 <% @tabs.each do |tab| %>
 screen -t <%= tab.name %> <%= @tabs.index(tab) + 1 %>
-stuff "<%= tab.stuff %>"
+stuff "<%= tab.stuff %>\012"
 <% end %>
 
 select 1

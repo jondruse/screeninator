@@ -14,16 +14,6 @@ module Screeninator
   class Cli
     
     class << self
-      ## 
-      # Author:: Jon Druse (mailto:jon@jondruse.com)
-      #
-      # == Parameters
-      #
-      # * +args+ - Array - accepts any amount of args
-      # 
-      # == Change History
-      # 09/20/10:: added documentation Jon Druse (mailto:jon@jondruse.com)
-      ### 
       def start(*args)
 
         if args.empty?
@@ -34,23 +24,20 @@ module Screeninator
 
       end
 
+      # print the usage string, this is a fall through method.
       def usage
         puts "Usage: screeninator ACTION [Arg]"
       end
-
+      
+      # Open a config file, it's created if it doesn't exist already.
       def open(*args)
         puts "warning: passing multiple arguments to open will be ignored" if args.size > 1
-        
         FileUtils.mkdir_p(root_dir)
-        
         file_path = "#{root_dir}#{args.shift}.yml"
-        
         unless File.exists?(file_path)
           FileUtils.cp(sample_config, file_path)
         end
-        
         `$EDITOR #{file_path}`
-        
       end
       
       def delete(*args)
@@ -92,10 +79,8 @@ module Screeninator
       
       def run(*args)
         filename = args.shift
-        file_path = "#{root_dir}#{filename}.yml"
         puts "Running: #{filename}"
-        
-        Screeninator::Runner.new(file_path).run!
+        Screeninator::Runner.new(filename).run!
       end
       
       private
