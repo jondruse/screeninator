@@ -1,6 +1,6 @@
 = screeninator
 
-Description goes here.
+Create an manage screen sessions easily.
 
 == Note on Patches/Pull Requests
  
