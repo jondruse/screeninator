@@ -1,6 +1,6 @@
 
 require 'screeninator/cli'
-require 'screeninator/runner'
+require 'screeninator/config_writer'
 require 'yaml'
 require 'ostruct'
 require 'erb'

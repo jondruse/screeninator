@@ -1,6 +1,10 @@
 module Screeninator
   
-  class Runner
+  class ConfigWriter
+    
+    def self.write_aliases(aliases)
+      File.open("#{ENV["HOME"]}/.screeninator/scripts/screeninator", 'w') {|f| f.write(aliases.join("\n")) }
+    end
     
     def initialize(filename)
       @filename  = filename
@@ -8,13 +12,13 @@ module Screeninator
       process_config!
     end
     
-    def run!
+    def write!
       template    = "#{File.dirname(__FILE__)}/assets/screen_config.screen"
       erb         = ERB.new(IO.read(template)).result(binding)
       config_path = "#{root_dir}#{@filename}.screen"
       tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
       
-      puts "screen -c #{config_path} -S #{@project_name.gsub(" ", "_")}"
+      "alias run_#{@filename}='screen -c #{config_path} -S #{@project_name.gsub(" ", "_")}'"
     end
     
     private
@@ -47,6 +51,9 @@ module Screeninator
       
     end
     
+    def write_alias(stuff)
+      File.open("#{root_dir}scripts/#{@filename}", 'w') {|f| f.write(stuff) }
+    end
   end
   
 end

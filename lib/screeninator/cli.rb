@@ -32,12 +32,13 @@ module Screeninator
       # Open a config file, it's created if it doesn't exist already.
       def open(*args)
         puts "warning: passing multiple arguments to open will be ignored" if args.size > 1
-        FileUtils.mkdir_p(root_dir)
+        FileUtils.mkdir_p(root_dir+"scripts")
         file_path = "#{root_dir}#{args.shift}.yml"
         unless File.exists?(file_path)
           FileUtils.cp(sample_config, file_path)
         end
         `$EDITOR #{file_path}`
+        update_scripts
       end
       
       def delete(*args)
@@ -55,7 +56,7 @@ module Screeninator
         
       end
       
-      def delete_all(*args)
+      def implode(*args)
         puts "delete_all doesn't accapt any arguments!" unless args.empty?
         puts "Are you sure you want to delete all screeninator configs? (type yes or no):"
         
@@ -77,14 +78,26 @@ module Screeninator
         end
       end
       
-      def run(*args)
-        filename = args.shift
-        puts "Running: #{filename}"
-        Screeninator::Runner.new(filename).run!
+      # def run(*args)
+      #   filename = args.shift
+      #   puts "Running: #{filename}"
+      #   Screeninator::Runner.new(filename).run!
+      # end
+      
+      def update_scripts
+        aliases = []
+        Dir["#{root_dir}*.yml"].each do |path| 
+          path = File.basename(path, '.yml')
+          aliases << Screeninator::ConfigWriter.new(path).write!
+        end
+        
+        Screeninator::ConfigWriter.write_aliases(aliases)
+
+        `/bin/bash -c 'source #{root_dir}scripts/screeninator'`
       end
       
       private
-      
+            
       def root_dir
         "#{ENV["HOME"]}/.screeninator/"
       end
