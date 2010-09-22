@@ -1,8 +1,10 @@
-= Screeninator
+Screeninator
+============
 
 Create an manage screen sessions easily. Inspired by Arthur Chiu's ([Terminitor](http://github.com/achiu/terminitor))
 
-== Installation
+Installation
+------------
 
   $ gem install screeninator
   
@@ -12,7 +14,8 @@ Then follow the instructions.  You just have to drop a line in your ~/.bashrc fi
 
 This will load the alias commands into bash.
 
-== Usage
+Usage
+-----
   
 ### Create a project ###
   
@@ -38,14 +41,16 @@ This will open your default editor (set through the $EDITOR variable in BASH) an
 
 If a tab contains multiple commands, they will be 'joined' together with '&&'.
 
-== Starting a project
+Starting a project
+------------------
 
   $ start_project_name
   
 This will fire up screen with all the tabs you configured.
 
 
-== Other Commands
+Other Commands
+--------------
 
   $ screeninator list
   
@@ -60,7 +65,8 @@ Remove a project
 Remove all screeninator configs, aliases and scripts.
 
 
-== Note on Patches/Pull Requests
+Note on Patches/Pull Requests
+-----------------------------
  
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -70,6 +76,7 @@ Remove all screeninator configs, aliases and scripts.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+Copyright
+---------
 
 Copyright (c) 2010 Jon Druse. See LICENSE for details.
