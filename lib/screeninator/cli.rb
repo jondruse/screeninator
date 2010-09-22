@@ -92,8 +92,6 @@ module Screeninator
         end
         
         Screeninator::ConfigWriter.write_aliases(aliases)
-
-        `/bin/bash -c 'source #{root_dir}scripts/screeninator'`
       end
       
       private

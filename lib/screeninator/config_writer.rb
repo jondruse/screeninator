@@ -18,7 +18,7 @@ module Screeninator
       config_path = "#{root_dir}#{@filename}.screen"
       tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
       
-      "alias run_#{@filename}='screen -c #{config_path} -S #{@project_name.gsub(" ", "_")}'"
+      "alias start_#{@filename}='screen -c #{config_path} -S #{@project_name.gsub(" ", "_")}'"
     end
     
     private
