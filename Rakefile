@@ -11,7 +11,7 @@ begin
     gem.homepage = "http://github.com/jondruse/screeninator"
     gem.authors = ["Jon Druse"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    gem.post_install_message = <<Message
+    gem.post_install_message = <<-Message
 
 Thanks for installing Screeninator!
 
