@@ -54,6 +54,12 @@ This will fire up screen with all the tabs you configured.
 After you create a project, you will have to open a new shell window. This is because Screeninator adds an alias to bash to open screen with the project config.
 
 
+Example
+-------
+
+![Sample](http://img.skitch.com/20100922-b6yny5qxuh159asdekh3mx9quk.png)
+
+
 Other Commands
 --------------
 
