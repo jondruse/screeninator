@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
      "lib/screeninator/assets/screen_config.screen",
      "lib/screeninator/cli.rb",
      "lib/screeninator/config_writer.rb",
+     "screeninator.gemspec",
      "test/helper.rb",
      "test/test_screeninator.rb"
   ]
