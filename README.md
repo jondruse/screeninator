@@ -10,7 +10,7 @@ Installation
   
 Then follow the instructions.  You just have to drop a line in your ~/.bashrc file, similar to RVM if you've used that before:
 
-    if [[ -s /Users/jondruse/.screeninator/scripts/screeninator ]] ; then source /Users/jondruse/.screeninator/scripts/screeninator ; fi	
+    if [[ -s $HOME/.screeninator/scripts/screeninator ]] ; then source $HOME/.screeninator/scripts/screeninator ; fi
 
 This will load the alias commands into bash.
 

@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/jondruse/screeninator"
     gem.authors = ["Jon Druse"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.post_install_message "Thanks for installing Screeninator!\n\n Remember to add the following line to your .bashrc file\n\n if [[ -s $HOME/.screeninator/scripts/screeninator ]] ; then source $HOME/.screeninator/scripts/screeninator ; fi"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
