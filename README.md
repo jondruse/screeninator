@@ -41,12 +41,17 @@ This will open your default editor (set through the $EDITOR variable in BASH) an
 
 If a tab contains multiple commands, they will be 'joined' together with '&&'.
 
+
 Starting a project
 ------------------
 
     $ start_project_name
   
 This will fire up screen with all the tabs you configured.
+
+### Limitations ###
+
+After you create a project, you will have to open a new shell window. This is because Screeninator adds an alias to bash to open screen with the project config.
 
 
 Other Commands
