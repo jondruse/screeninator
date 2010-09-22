@@ -1,6 +1,5 @@
-# ~/.screeninator/foo.yml
+# ~/.screeninator/<%= @name %>.yml
 # you can make as many tabs as you wish...
-# tab names are actually arbitrary at this point too.
 
 escape: ``
 project_name: Screeninator

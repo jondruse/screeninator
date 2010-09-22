@@ -45,7 +45,12 @@ module Screeninator
       yaml["tabs"].each do |tab|
         t = OpenStruct.new
         t.name = tab.keys.first
-        t.stuff = tab.values.first
+        value = tab.values.first
+        t.stuff = if value.is_a?(Array)
+          value.join(" && ")
+        else
+          value
+        end
         @tabs << t
       end
       

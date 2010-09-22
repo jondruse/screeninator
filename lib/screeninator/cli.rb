@@ -32,26 +32,33 @@ module Screeninator
       # Open a config file, it's created if it doesn't exist already.
       def open(*args)
         puts "warning: passing multiple arguments to open will be ignored" if args.size > 1
+        @name = args.shift
         FileUtils.mkdir_p(root_dir+"scripts")
-        file_path = "#{root_dir}#{args.shift}.yml"
-        unless File.exists?(file_path)
-          FileUtils.cp(sample_config, file_path)
+        config_path = "#{root_dir}#{@name}.yml"
+        unless File.exists?(config_path)
+          template    = "#{File.dirname(__FILE__)}/assets/sample.yml"
+          erb         = ERB.new(File.read(template)).result(binding)
+          tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
         end
-        `$EDITOR #{file_path}`
+        `$EDITOR #{config_path}`
         update_scripts
       end
       
       def delete(*args)
         puts "warning: passing multiple arguments to delete will be ignored" if args.size > 1
         filename = args.shift
-        puts "Are you sure you want to delete #{filename}? (type yes or no):"
+        file_path = "#{root_dir}#{filename}.yml"
         
-        if %w(yes Yes YES).include?(STDIN.gets.chop)
-          file_path = "#{root_dir}#{filename}.yml"
-          FileUtils.rm(file_path)
-          puts "Deleted #{file_path}"
+        if File.exists?(file_path)
+          puts "Are you sure you want to delete #{filename}? (type yes or no):"
+          if %w(yes Yes YES).include?(STDIN.gets.chop)
+            FileUtils.rm(file_path)
+            puts "Deleted #{file_path}"
+          else
+            puts "Aborting."
+          end
         else
-          puts "Aborting."
+          puts "That file doesn't exist."
         end
         
       end
@@ -73,6 +80,7 @@ module Screeninator
         verbose = args.include?("-v")
         puts "screeninator configs:"
         Dir["#{root_dir}**"].each do |path|
+          next unless verbose || File.extname(path) == ".yml"
           path = path.gsub(root_dir, '').gsub('.yml','') unless verbose
           puts "    #{path}"
         end
