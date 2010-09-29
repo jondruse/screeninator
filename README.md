@@ -41,6 +41,8 @@ This will open your default editor (set through the $EDITOR variable in BASH) an
 
 If a tab contains multiple commands, they will be 'joined' together with '&&'.
 
+If you want to have your own default config, place it into $HOME/.screeninator/default.yml
+
 
 Starting a project
 ------------------

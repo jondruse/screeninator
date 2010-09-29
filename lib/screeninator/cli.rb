@@ -113,7 +113,7 @@ module Screeninator
       end
       
       def user_config
-        "#{ENV["HOME"]}/.screeninator/custom_config.yml"
+        "#{ENV["HOME"]}/.screeninator/default.yml"
       end
       
     end
