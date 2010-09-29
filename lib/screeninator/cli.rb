@@ -36,7 +36,7 @@ module Screeninator
         FileUtils.mkdir_p(root_dir+"scripts")
         config_path = "#{root_dir}#{@name}.yml"
         unless File.exists?(config_path)
-          template    = "#{File.dirname(__FILE__)}/assets/sample.yml"
+          template    = File.exists?(user_config) ? user_config : "#{File.dirname(__FILE__)}/assets/sample.yml"
           erb         = ERB.new(File.read(template)).result(binding)
           tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
         end
@@ -110,6 +110,10 @@ module Screeninator
       
       def sample_config
         "#{File.dirname(__FILE__)}/assets/sample.yml"
+      end
+      
+      def user_config
+        "#{ENV["HOME"]}/.screeninator/custom_config.yml"
       end
       
     end
