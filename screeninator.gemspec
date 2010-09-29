@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{screeninator}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jon Druse"]
-  s.date = %q{2010-09-22}
+  s.date = %q{2010-09-28}
   s.default_executable = %q{screeninator}
   s.description = %q{Create and manage complex screen sessions easily.}
   s.email = %q{jon@jondruse.com}
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CHANGELOG.md",
      "LICENSE",
      "README.md",
      "Rakefile",
