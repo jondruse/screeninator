@@ -40,7 +40,7 @@ module Screeninator
           erb         = ERB.new(File.read(template)).result(binding)
           tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
         end
-        `$EDITOR #{config_path}`
+        system("$EDITOR #{config_path}")
         update_scripts
       end
       
