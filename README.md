@@ -78,6 +78,12 @@ Remove a project
 Remove all screeninator configs, aliases and scripts.
 
 
+Questions? Comments? Feature Request?
+-------------------------------------
+
+I would love to hear your feedback on this project!  Send me a message!
+
+
 Note on Patches/Pull Requests
 -----------------------------
  
