@@ -77,6 +77,9 @@ Remove a project
   
 Remove all screeninator configs, aliases and scripts.
 
+    $ screeninator update_scripts
+
+Refresh the screen files (required after modifying, or creating, a project)
 
 Questions? Comments? Feature Request?
 -------------------------------------
