@@ -12,7 +12,17 @@ Then follow the instructions.  You just have to drop a line in your ~/.bashrc fi
 
     if [[ -s $HOME/.screeninator/scripts/screeninator ]] ; then source $HOME/.screeninator/scripts/screeninator ; fi
 
-This will load the alias commands into bash.
+Editor
+------
+
+Screeninator uses your shell's default editor for opening files.  If you're not sure what that is type:
+  
+    $ echo $EDITOR
+    
+For me that produces "mate -w"  
+If you want to change your default editor simple put a line in ~/.bashrc that changes it. Mine looks like this:
+
+    export EDITOR='mate -w'
 
 Usage
 -----
@@ -21,7 +31,7 @@ Usage
   
     $ screeninator open project_name
   
-This will open your default editor (set through the $EDITOR variable in BASH) and present you with the default config:
+Create or edit your projects with this command. Your default editor ($EDITOR) is used to open the file. If this is a new project you will see this default config:
 
     # ~/.screeninator/project_name.yml
     # you can make as many tabs as you wish...
@@ -64,6 +74,10 @@ Example
 
 Other Commands
 --------------
+    $ screeninator update_scripts
+
+Re-create the screen scripts and aliases from the configs. Use this only if you edit your project configs outside of screeninator, i.e. not using "screeninator open xxx".
+
 
     $ screeninator list
   
