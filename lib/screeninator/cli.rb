@@ -44,6 +44,12 @@ module Screeninator
         update_scripts
       end
       
+      def copy(*args)
+        @name = args.shift
+        @config_to_copy = "#{root_dir}#{@name}.yml"
+        open(@name)
+      end
+      
       def delete(*args)
         puts "warning: passing multiple arguments to delete will be ignored" if args.size > 1
         filename = args.shift
@@ -86,12 +92,6 @@ module Screeninator
         end
       end
       
-      # def run(*args)
-      #   filename = args.shift
-      #   puts "Running: #{filename}"
-      #   Screeninator::Runner.new(filename).run!
-      # end
-      
       def update_scripts
         aliases = []
         Dir["#{root_dir}*.yml"].each do |path| 
@@ -113,7 +113,7 @@ module Screeninator
       end
       
       def user_config
-        "#{ENV["HOME"]}/.screeninator/default.yml"
+        @config_to_copy || "#{ENV["HOME"]}/.screeninator/default.yml"
       end
       
     end
