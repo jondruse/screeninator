@@ -46,7 +46,8 @@ module Screeninator
       
       def copy(*args)
         @name = args.shift
-        @config_to_copy = "#{root_dir}#{@name}.yml"
+        @copy = args.shift
+        @config_to_copy = "#{root_dir}#{@copy}.yml"
         open(@name)
       end
       

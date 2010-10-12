@@ -74,6 +74,12 @@ Example
 
 Other Commands
 --------------
+
+    $ screeninator copy existing_project new_project
+
+Copy an existing project.
+
+
     $ screeninator update_scripts
 
 Re-create the screen scripts and aliases from the configs. Use this only if you edit your project configs outside of screeninator, i.e. not using "screeninator open xxx".
