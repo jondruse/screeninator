@@ -45,9 +45,28 @@ module Screeninator
       end
       
       def copy(*args)
-        @name = args.shift
         @copy = args.shift
+        @name = args.shift
         @config_to_copy = "#{root_dir}#{@copy}.yml"
+        unless File.exists?(@config_to_copy)
+          puts "Project #{@copy} doesn't exist!"
+          Kernel.exit(1)
+        end
+        
+        file_path = "#{root_dir}#{@name}.yml"
+        
+        if File.exists?(file_path)
+          puts "#{@name} already exists, would you like to overwrite it? (type yes or no):"
+          
+          if %w(yes Yes YES).include?(STDIN.gets.chop)
+            FileUtils.rm(file_path)
+            puts "Overwriting #{@name}"
+          else
+            puts "Aborting."
+            Kernel.exit(0)
+          end
+          
+        end
         open(@name)
       end
       
