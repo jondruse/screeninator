@@ -2,6 +2,8 @@ module Screeninator
   
   class ConfigWriter
     
+    include Screeninator::Helper
+    
     def self.write_aliases(aliases)
       File.open("#{ENV["HOME"]}/.screeninator/scripts/screeninator", 'w') {|f| f.write(aliases.join("\n")) }
     end
@@ -30,12 +32,9 @@ module Screeninator
     def process_config!
       yaml = YAML.load(File.read(@file_path))
 
-      raise "Your configuration file should include some tabs." if yaml["tabs"].nil?
-      puts "Your configuration file didn't specify a 'project_root', using ~/" if yaml["project_root"].nil?
-      if yaml["project_name"].nil?
-        puts "Your configuration file didn't specify a 'project_name', using 'Fluffy Bunnies'"
-        yaml["project_name"] = 'Fluffy Bunnies'
-      end
+      exit!("Your configuration file should include some tabs.")        if yaml["tabs"].nil?
+      exit!("Your configuration file didn't specify a 'project_root'")  if yaml["project_root"].nil?
+      exit!("Your configuration file didn't specify a 'project_name'")  if yaml["project_name"].nil?
       
       @escape       = yaml["escape"]
       @project_name = yaml["project_name"]

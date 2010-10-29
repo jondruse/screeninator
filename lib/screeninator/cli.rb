@@ -14,6 +14,8 @@ module Screeninator
   class Cli
     
     class << self
+      include Screeninator::Helper
+      
       def start(*args)
 
         if args.empty?
@@ -48,22 +50,16 @@ module Screeninator
         @copy = args.shift
         @name = args.shift
         @config_to_copy = "#{root_dir}#{@copy}.yml"
-        unless File.exists?(@config_to_copy)
-          puts "Project #{@copy} doesn't exist!"
-          Kernel.exit(1)
-        end
+        
+        exit!("Project #{@copy} doesn't exist!")             unless File.exists?(@config_to_copy)
+        exit!("You must specify a name for the new project") unless @name
         
         file_path = "#{root_dir}#{@name}.yml"
         
         if File.exists?(file_path)
-          puts "#{@name} already exists, would you like to overwrite it? (type yes or no):"
-          
-          if %w(yes Yes YES).include?(STDIN.gets.chop)
+          confirm!("#{@name} already exists, would you like to overwrite it? (type yes or no):") do
             FileUtils.rm(file_path)
             puts "Overwriting #{@name}"
-          else
-            puts "Aborting."
-            Kernel.exit(0)
           end
           
         end
@@ -76,30 +72,22 @@ module Screeninator
         file_path = "#{root_dir}#{filename}.yml"
         
         if File.exists?(file_path)
-          puts "Are you sure you want to delete #{filename}? (type yes or no):"
-          if %w(yes Yes YES).include?(STDIN.gets.chop)
+          confirm!("Are you sure you want to delete #{filename}? (type yes or no):") do
             FileUtils.rm(file_path)
-            puts "Deleted #{file_path}"
-          else
-            puts "Aborting."
+            puts "Deleted #{filename}"
           end
         else
-          puts "That file doesn't exist."
+          exit! "That file doesn't exist."
         end
         
       end
       
       def implode(*args)
-        puts "delete_all doesn't accapt any arguments!" unless args.empty?
-        puts "Are you sure you want to delete all screeninator configs? (type yes or no):"
-        
-        if %w(yes Yes YES).include?(STDIN.gets.chop)
+        exit!("delete_all doesn't accapt any arguments!") unless args.empty?
+        confirm!("Are you sure you want to delete all screeninator configs? (type yes or no):") do
           FileUtils.remove_dir(root_dir)
           puts "Deleted #{root_dir}"
-        else
-          puts "Aborting."
         end
-        
       end
 
       def list(*args)
@@ -113,12 +101,12 @@ module Screeninator
       end
       
       def update_scripts
+        Dir["#{root_dir}*.screen"].each {|p| FileUtils.rm(p) }
         aliases = []
         Dir["#{root_dir}*.yml"].each do |path| 
           path = File.basename(path, '.yml')
           aliases << Screeninator::ConfigWriter.new(path).write!
         end
-        
         Screeninator::ConfigWriter.write_aliases(aliases)
       end
       
