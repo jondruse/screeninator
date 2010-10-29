@@ -1,3 +1,12 @@
+1.0.1 / 2010-10-29
+------------------
+
+* 2 enhancements
+
+  * Screeninator now does a better job of cleaning up after itself, removing screen configs when you delete projects
+  * re-factored some code into a helper making the CLI code much better to look at
+
+
 0.1.2 / 2010-10-12
 ------------------
 
