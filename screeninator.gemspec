@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{screeninator}
-  s.version = "0.1.2"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jon Druse"]
-  s.date = %q{2010-10-12}
+  s.date = %q{2010-10-29}
   s.default_executable = %q{screeninator}
   s.description = %q{Create and manage complex screen sessions easily.}
   s.email = %q{jon@jondruse.com}
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
      "lib/screeninator/assets/screen_config.screen",
      "lib/screeninator/cli.rb",
      "lib/screeninator/config_writer.rb",
+     "lib/screeninator/helper.rb",
      "screeninator.gemspec",
      "test/helper.rb",
      "test/test_screeninator.rb"
