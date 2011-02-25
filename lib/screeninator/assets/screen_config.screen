@@ -4,7 +4,7 @@ escape <%= @escape || "``" %>
 autodetach on
 defscrollback 10000
 hardstatus alwayslastline
-hardstatus string '%{= kg}[ %{G} <%= @project_name %> %{g}][%= %{= kw}%?%-Lw%?%{r} (%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m/%d %{W}%c %{g}]'
+hardstatus string '%{= kg}[ %{G} <%= @project_name %> %{g}][%= %{= kw}%?%-Lw%?%{r} (%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m/%d %{W}%c %{g}]'
 
 chdir "<%= @project_root %>"
 
