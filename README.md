@@ -98,6 +98,13 @@ Remove a project
 Remove all screeninator configs, aliases and scripts.
 
 
+Customization
+-------------
+In order to customize the starting screen configuration that is used as
+the .screen template for each project create a file in
+.screeninator/scripts/screen\_config.screen and copy your template info
+(including ERB) in to it.
+
 Questions? Comments? Feature Request?
 -------------------------------------
 

@@ -15,7 +15,11 @@ module Screeninator
     end
     
     def write!
-      template    = "#{File.dirname(__FILE__)}/assets/screen_config.screen"
+      if File.exists?("#{root_dir}scripts/screen_config.screen")
+        template    = "#{root_dir}scripts/screen_config.screen"
+      else
+        template    = "#{File.dirname(__FILE__)}/assets/screen_config.screen"
+      end
       erb         = ERB.new(IO.read(template)).result(binding)
       config_path = "#{root_dir}#{@filename}.screen"
       tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
