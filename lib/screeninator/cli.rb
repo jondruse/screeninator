@@ -1,6 +1,5 @@
 require 'fileutils'
 
-## 
 # Author:: Jon Druse (mailto:jon@jondruse.com)
 # 
 # = Description
@@ -8,8 +7,8 @@ require 'fileutils'
 # This class is where each screeninator command is implemented.
 #
 # == Change History
-# 09/20/10:: created Jon Druse (mailto:jon@jondruse.com)
-### 
+# * 09/20/10:: created Jon Druse (mailto:jon@jondruse.com)
+# * 03/15/11:: renmaed usage to help. adding option parser
 module Screeninator
   class Cli
     
@@ -17,18 +16,18 @@ module Screeninator
       include Screeninator::Helper
       
       def start(*args)
-
-        if args.empty?
-          self.usage
-        else
+        
+        begin
           self.send(args.shift, *args)
+        rescue NoMethodError
+          self.help
         end
 
       end
 
       # print the usage string, this is a fall through method.
-      def usage
-        puts "Usage: screeninator ACTION [Arg]"
+      def help
+        puts HELP_TEXT
       end
       
       # Open a config file, it's created if it doesn't exist already.
@@ -42,8 +41,12 @@ module Screeninator
           erb         = ERB.new(File.read(template)).result(binding)
           tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
         end
-        system("$EDITOR #{config_path}")
-        update_scripts
+
+        cmd = "$EDITOR #{config_path}"
+        if ENV["TEST-ENV"]
+          system(cmd)
+          update(@name)
+        end
       end
       
       def copy(*args)
@@ -91,21 +94,30 @@ module Screeninator
       end
 
       def list(*args)
-        verbose = args.include?("-v")
         puts "screeninator configs:"
-        Dir["#{root_dir}**"].each do |path|
-          next unless verbose || File.extname(path) == ".yml"
-          path = path.gsub(root_dir, '').gsub('.yml','') unless verbose
-          puts "    #{path}"
-        end
+        list
       end
       
-      def update_scripts
-        Dir["#{root_dir}*.screen"].each {|p| FileUtils.rm(p) }
+      def info(*args)
+        puts "screeninator configs:"
+        list(true)
+      end
+      
+      def update(*args)
         aliases = []
-        Dir["#{root_dir}*.yml"].each do |path| 
-          path = File.basename(path, '.yml')
-          aliases << Screeninator::ConfigWriter.new(path).write!
+        Dir["#{root_dir}*.yml"].each do |path|
+          begin
+            path = File.basename(path, '.yml')
+            config_name = path.split("/").last
+            next unless args.empty? || args.include?(config_name)
+          
+            begin; FileUtils.rm("#{path}.screen"); rescue; end
+          
+            puts "updating #{config_name}"
+            aliases << Screeninator::ConfigWriter.new(path).write!
+          rescue ArgumentError => e
+            puts e
+          end
         end
         Screeninator::ConfigWriter.write_aliases(aliases)
       end
@@ -113,7 +125,9 @@ module Screeninator
       private
             
       def root_dir
-        "#{ENV["HOME"]}/.screeninator/"
+        dir = "#{ENV["HOME"]}/.screeninator/"
+        dir << "test/" if ENV["TEST-ENV"]
+        dir
       end
       
       def sample_config
@@ -122,6 +136,14 @@ module Screeninator
       
       def user_config
         @config_to_copy || "#{ENV["HOME"]}/.screeninator/default.yml"
+      end
+      
+      def list(verbose=false)
+        Dir["#{root_dir}**"].each do |path|
+          next unless verbose || File.extname(path) == ".yml"
+          path = path.gsub(root_dir, '').gsub('.yml','') unless verbose
+          puts "    #{path}"
+        end
       end
       
     end

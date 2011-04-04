@@ -19,8 +19,13 @@ module Screeninator
       erb         = ERB.new(IO.read(template)).result(binding)
       config_path = "#{root_dir}#{@filename}.screen"
       tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
-      
-      "alias start_#{@filename}='screen -c #{config_path} -S #{@project_name.gsub(" ", "_")}'"
+
+      @project_name.gsub!(" ", "_")
+
+      check = "screen -ls | grep #{@project_name}"
+      attch = "screen -dr #{@project_name}"
+      start = "screen -c #{config_path} -S #{@project_name}"
+      %Q{alias start_#{@filename}='if [[ -n `#{check}` ]] ; then `#{attch}` ; else `#{start}`; fi'}
     end
     
     private
@@ -32,9 +37,9 @@ module Screeninator
     def process_config!
       yaml = YAML.load(File.read(@file_path))
 
-      exit!("Your configuration file should include some tabs.")        if yaml["tabs"].nil?
-      exit!("Your configuration file didn't specify a 'project_root'")  if yaml["project_root"].nil?
-      exit!("Your configuration file didn't specify a 'project_name'")  if yaml["project_name"].nil?
+      raise ArgumentError.new("Your configuration file should include some tabs.")        if yaml["tabs"].nil?
+      raise ArgumentError.new("Your configuration file didn't specify a 'project_root'")  if yaml["project_root"].nil?
+      raise ArgumentError.new("Your configuration file didn't specify a 'project_name'")  if yaml["project_name"].nil?
       
       @escape       = yaml["escape"]
       @project_name = yaml["project_name"]

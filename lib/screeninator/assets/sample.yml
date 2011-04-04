@@ -2,7 +2,7 @@
 # you can make as many tabs as you wish...
 
 escape: ``
-project_name: Screeninator
+project_name: <%= @name %>
 project_root: ~/code/rails_project
 tabs:
   - shell: git pull

@@ -1,3 +1,18 @@
+1.0.2 / 2011-03-18
+------------------
+
+* 1 bugfix
+  
+  * fix whitespace issue in status line
+  
+* 4 enhancements
+
+  * added help command. shows available commands and explanation
+  * broke list -v into its own command called info
+  * update command can now take a list of configs to update, leave blank to update all
+  * modified bash aliases to attach an already running screen config instead of starting a new one
+  * tests!
+
 1.0.1 / 2010-10-29
 ------------------
 
