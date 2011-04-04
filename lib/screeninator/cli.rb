@@ -19,7 +19,8 @@ module Screeninator
         
         begin
           self.send(args.shift, *args)
-        rescue NoMethodError
+        rescue NoMethodError => e
+          puts e
           self.help
         end
 
@@ -32,7 +33,6 @@ module Screeninator
       
       # Open a config file, it's created if it doesn't exist already.
       def open(*args)
-        puts "warning: passing multiple arguments to open will be ignored" if args.size > 1
         @name = args.shift
         FileUtils.mkdir_p(root_dir+"scripts")
         config_path = "#{root_dir}#{@name}.yml"
@@ -42,11 +42,8 @@ module Screeninator
           tmp         = File.open(config_path, 'w') {|f| f.write(erb) }
         end
 
-        cmd = "$EDITOR #{config_path}"
-        if ENV["TEST-ENV"]
-          system(cmd)
-          update(@name)
-        end
+        system("$EDITOR #{config_path}")
+        update(@name)
       end
       
       def copy(*args)
@@ -122,12 +119,39 @@ module Screeninator
         Screeninator::ConfigWriter.write_aliases(aliases)
       end
       
+      def customize(*args)        
+        @type = args.shift
+        @action = args.shift
+        if !['config','template'].include?(@type)
+          puts "Usage: screeninator customize [config|template]"
+          puts "config - This is the default YAML config file to use."
+          puts "template - This is the default screen config template, complete with ERB"
+          exit
+        end
+
+        FileUtils.mkdir_p(root_dir+"defaults")
+        
+        path = case @type 
+        when "config"; USER_CONFIG
+        when "template"; USER_SCREEN_CONFIG
+        end
+        
+        if @action.nil?
+          system("$EDITOR #{path}")
+        end
+        
+        if @action == "delete"
+          confirm!("Are you sure you want to delete #{path}? (type yes or no):") do
+            FileUtils.rm(path)
+            puts "Deleted #{path}"
+          end
+        end
+      end
+      
       private
             
       def root_dir
         dir = "#{ENV["HOME"]}/.screeninator/"
-        dir << "test/" if ENV["TEST-ENV"]
-        dir
       end
       
       def sample_config
@@ -135,7 +159,11 @@ module Screeninator
       end
       
       def user_config
-        @config_to_copy || "#{ENV["HOME"]}/.screeninator/default.yml"
+        @config_to_copy || USER_CONFIG
+      end
+      
+      def user_screen_config
+        USER_SCREEN_CONFIG
       end
       
       def list(verbose=false)

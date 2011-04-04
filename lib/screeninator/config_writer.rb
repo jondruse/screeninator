@@ -15,8 +15,8 @@ module Screeninator
     end
     
     def write!
-      if File.exists?("#{root_dir}scripts/screen_config.screen")
-        template    = "#{root_dir}scripts/screen_config.screen"
+      if File.exists?(USER_SCREEN_CONFIG)
+        template    = USER_SCREEN_CONFIG
       else
         template    = "#{File.dirname(__FILE__)}/assets/screen_config.screen"
       end
@@ -39,8 +39,7 @@ module Screeninator
     end
     
     def process_config!
-      yaml = YAML.load(File.read(@file_path))
-
+      raise ArgumentError.new("#{@file_path} is not valid YAML!")                         unless yaml = YAML.load(File.read(@file_path))
       raise ArgumentError.new("Your configuration file should include some tabs.")        if yaml["tabs"].nil?
       raise ArgumentError.new("Your configuration file didn't specify a 'project_root'")  if yaml["project_root"].nil?
       raise ArgumentError.new("Your configuration file didn't specify a 'project_name'")  if yaml["project_name"].nil?
