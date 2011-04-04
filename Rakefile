@@ -15,9 +15,11 @@ begin
 
 Thanks for installing Screeninator!
 
+UPGRADE WARNING - If you have a custom default config, move it to ~/.screeninator/defaults/
+
 Remember to add the following line to your .bashrc file
 
-if [[ -s $HOME/.screeninator/scripts/screeninator ]] ; then source $HOME/.screeninator/scripts/screeninator ; fi
+[[ -s "$HOME/.screeninator/scripts/screeninator" ]] && source "$HOME/.screeninator/scripts/screeninator"
   
 Message
 

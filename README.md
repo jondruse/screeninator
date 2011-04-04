@@ -75,35 +75,9 @@ Example
 Other Commands
 --------------
 
-    $ screeninator copy existing_project new_project
-
-Copy an existing project.
-
-
-    $ screeninator update_scripts
-
-Re-create the screen scripts and aliases from the configs. Use this only if you edit your project configs outside of screeninator, i.e. not using "screeninator open xxx".
-
-
-    $ screeninator list
-  
-List all the projects you have configured
-
-    $ screeninator delete project_name
-  
-Remove a project
-
-    $ screeninator implode
-  
-Remove all screeninator configs, aliases and scripts.
-
-
-Customization
--------------
-In order to customize the starting screen configuration that is used as
-the .screen template for each project create a file in
-.screeninator/scripts/screen\_config.screen and copy your template info
-(including ERB) in to it.
+For a list of available commands:
+    
+    $ screeninator help
 
 Questions? Comments? Feature Request?
 -------------------------------------
