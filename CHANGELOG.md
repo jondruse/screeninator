@@ -1,3 +1,10 @@
+1.0.3 / 2011-07-07
+------------------
+
+* 1 bugfix
+    
+  * fix existing aliases being deleted when creating a new project
+
 1.0.2 / 2011-04-04
 ------------------
 

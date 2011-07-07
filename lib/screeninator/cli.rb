@@ -106,11 +106,9 @@ module Screeninator
           begin
             path = File.basename(path, '.yml')
             config_name = path.split("/").last
-            next unless args.empty? || args.include?(config_name)
           
             begin; FileUtils.rm("#{path}.screen"); rescue; end
           
-            puts "updating #{config_name}"
             aliases << Screeninator::ConfigWriter.new(path).write!
           rescue ArgumentError => e
             puts e
