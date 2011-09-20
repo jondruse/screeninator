@@ -19,6 +19,9 @@ module Screeninator
         
         begin
           self.send(args.shift, *args)
+        rescue TypeError => e
+          puts e
+          self.help
         rescue NoMethodError => e
           puts e
           self.help
