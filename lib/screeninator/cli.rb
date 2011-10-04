@@ -18,7 +18,11 @@ module Screeninator
       def start(*args)
         
         begin
-          self.send(args.shift, *args)
+          if args.empty?
+            self.help
+          else
+            self.send(args.shift, *args)
+          end
         rescue NoMethodError => e
           puts e
           self.help
