@@ -12,4 +12,4 @@ tabs:
   - console: rails c
   - capistrano:
   - server: ssh me@myhost
-  
+
