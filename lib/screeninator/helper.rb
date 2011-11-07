@@ -2,7 +2,7 @@ module Screeninator
   module Helper
     
     help = ["Usage: screeninator ACTION [Args]\n\n"]
-    help << "Available Commans:\n\n"
+    help << "Available Commands:\n\n"
     help << "open CONFIG_NAME".ljust(40)                  + "Open's the config file in $EDITOR.  If it doesn't exist, it will be created."
     help << "copy CONFIG_NAME NEW_CONFIG".ljust(40)       + "Copy an existing config into a new one."
     help << "list".ljust(40)                              + "List all your current config files."
