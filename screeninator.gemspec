@@ -46,7 +46,7 @@ UPGRADE WARNING - If you have a custom default config, move it to ~/.screeninato
 Remember to add the following line to your .bashrc file
 
 [[ -s "$HOME/.screeninator/scripts/screeninator" ]] && source "$HOME/.screeninator/scripts/screeninator"
-  
+
 }
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]

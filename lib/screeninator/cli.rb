@@ -1,9 +1,9 @@
 require 'fileutils'
 
 # Author:: Jon Druse (mailto:jon@jondruse.com)
-# 
+#
 # = Description
-# 
+#
 # This class is where each screeninator command is implemented.
 #
 # == Change History
@@ -11,12 +11,12 @@ require 'fileutils'
 # * 03/15/11:: renmaed usage to help. adding option parser
 module Screeninator
   class Cli
-    
+
     class << self
       include Screeninator::Helper
-      
+
       def start(*args)
-        
+
         begin
           if args.empty?
             self.help
@@ -34,7 +34,7 @@ module Screeninator
       def help
         puts HELP_TEXT
       end
-      
+
       # Open a config file, it's created if it doesn't exist already.
       def open(*args)
         @name = args.shift
@@ -49,32 +49,32 @@ module Screeninator
         system("$EDITOR #{config_path}")
         update(@name)
       end
-      
+
       def copy(*args)
         @copy = args.shift
         @name = args.shift
         @config_to_copy = "#{root_dir}#{@copy}.yml"
-        
+
         exit!("Project #{@copy} doesn't exist!")             unless File.exists?(@config_to_copy)
         exit!("You must specify a name for the new project") unless @name
-        
+
         file_path = "#{root_dir}#{@name}.yml"
-        
+
         if File.exists?(file_path)
           confirm!("#{@name} already exists, would you like to overwrite it? (type yes or no):") do
             FileUtils.rm(file_path)
             puts "Overwriting #{@name}"
           end
-          
+
         end
         open(@name)
       end
-      
+
       def delete(*args)
         puts "warning: passing multiple arguments to delete will be ignored" if args.size > 1
         filename = args.shift
         file_path = "#{root_dir}#{filename}.yml"
-        
+
         if File.exists?(file_path)
           confirm!("Are you sure you want to delete #{filename}? (type yes or no):") do
             FileUtils.rm(file_path)
@@ -83,9 +83,9 @@ module Screeninator
         else
           exit! "That file doesn't exist."
         end
-        
+
       end
-      
+
       def implode(*args)
         exit!("delete_all doesn't accapt any arguments!") unless args.empty?
         confirm!("Are you sure you want to delete all screeninator configs? (type yes or no):") do
@@ -98,21 +98,21 @@ module Screeninator
         puts "screeninator configs:"
         list
       end
-      
+
       def info(*args)
         puts "screeninator configs:"
         list(true)
       end
-      
+
       def update(*args)
         aliases = []
         Dir["#{root_dir}*.yml"].each do |path|
           begin
             path = File.basename(path, '.yml')
             config_name = path.split("/").last
-          
+
             begin; FileUtils.rm("#{path}.screen"); rescue; end
-          
+
             aliases << Screeninator::ConfigWriter.new(path).write!
           rescue ArgumentError => e
             puts e
@@ -120,8 +120,8 @@ module Screeninator
         end
         Screeninator::ConfigWriter.write_aliases(aliases)
       end
-      
-      def customize(*args)        
+
+      def customize(*args)
         @type = args.shift
         @action = args.shift
         if !['config','template'].include?(@type)
@@ -132,16 +132,16 @@ module Screeninator
         end
 
         FileUtils.mkdir_p(root_dir+"defaults")
-        
-        path = case @type 
+
+        path = case @type
         when "config"; USER_CONFIG
         when "template"; USER_SCREEN_CONFIG
         end
-        
+
         if @action.nil?
           system("$EDITOR #{path}")
         end
-        
+
         if @action == "delete"
           confirm!("Are you sure you want to delete #{path}? (type yes or no):") do
             FileUtils.rm(path)
@@ -149,25 +149,25 @@ module Screeninator
           end
         end
       end
-      
+
       private
-            
+
       def root_dir
         dir = "#{ENV["HOME"]}/.screeninator/"
       end
-      
+
       def sample_config
         "#{File.dirname(__FILE__)}/assets/sample.yml"
       end
-      
+
       def user_config
         @config_to_copy || USER_CONFIG
       end
-      
+
       def user_screen_config
         USER_SCREEN_CONFIG
       end
-      
+
       def list(verbose=false)
         Dir["#{root_dir}**"].each do |path|
           next unless verbose || File.extname(path) == ".yml"
@@ -175,9 +175,9 @@ module Screeninator
           puts "    #{path}"
         end
       end
-      
+
     end
-    
+
   end
 end
 
