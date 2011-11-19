@@ -20,7 +20,7 @@ UPGRADE WARNING - If you have a custom default config, move it to ~/.screeninato
 Remember to add the following line to your .bashrc file
 
 [[ -s "$HOME/.screeninator/scripts/screeninator" ]] && source "$HOME/.screeninator/scripts/screeninator"
-  
+
 Message
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
