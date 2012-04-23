@@ -73,17 +73,16 @@ module Screeninator
       def delete(*args)
         puts "warning: passing multiple arguments to delete will be ignored" if args.size > 1
         filename = args.shift
-        file_path = "#{root_dir}#{filename}.yml"
+        files = Dir["#{root_dir}#{filename}*"]
 
-        if File.exists?(file_path)
+        unless files.empty?
           confirm!("Are you sure you want to delete #{filename}? (type yes or no):") do
-            FileUtils.rm(file_path)
+            FileUtils.rm(files)
             puts "Deleted #{filename}"
           end
-        else
-          exit! "That file doesn't exist."
         end
 
+        update
       end
 
       def implode(*args)

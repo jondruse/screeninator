@@ -1,17 +1,24 @@
+1.0.4 / 2012-04-23
+------------------
+
+* 1 bugfix
+
+  * delete command now deletes both yml template and screen config files and removes the start_ alias.
+
 1.0.3 / 2011-07-07
 ------------------
 
 * 1 bugfix
-    
+
   * fix existing aliases being deleted when creating a new project
 
 1.0.2 / 2011-04-04
 ------------------
 
 * 1 bugfix
-  
+
   * fix whitespace issue in status line
-  
+
 * 5 enhancements
 
   * added help command. shows available commands and explanation
