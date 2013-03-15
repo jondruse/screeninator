@@ -44,7 +44,11 @@ module Screeninator
       raise ArgumentError.new("Your configuration file didn't specify a 'project_root'")  if yaml["project_root"].nil?
       raise ArgumentError.new("Your configuration file didn't specify a 'project_name'")  if yaml["project_name"].nil?
 
-      @escape       = yaml["escape"]
+      @escape = if yaml["escape"]
+        yaml["escape"] == "tick" ? "``" : yaml["escape"]
+      else
+        nil
+      end
       @project_name = yaml["project_name"]
       @project_root = yaml["project_root"]
       @tabs         = []

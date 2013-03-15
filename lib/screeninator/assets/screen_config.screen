@@ -1,6 +1,8 @@
 startup_message off
 vbell off
-escape <%= @escape || "``" %>
+<% if @escape %>
+escape <%= @escape %>
+<% end %>
 autodetach on
 defscrollback 10000
 hardstatus alwayslastline

@@ -1,7 +1,7 @@
 # ~/.screeninator/<%= @name %>.yml
 # you can make as many tabs as you wish...
 
-escape: ``
+escape: tick
 project_name: <%= @name %>
 project_root: ~/code/rails_project
 tabs:
